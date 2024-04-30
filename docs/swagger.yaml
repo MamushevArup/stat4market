@@ -1,0 +1,56 @@
+definitions:
+  models.EventHandler:
+    properties:
+      eventTime:
+        type: string
+      eventType:
+        type: string
+      payload:
+        type: string
+      userID:
+        type: integer
+    type: object
+  response.Response:
+    properties:
+      error:
+        type: string
+      status:
+        type: integer
+    type: object
+host: localhost:4444
+info:
+  contact: {}
+  description: In this test task one endpoint and three clickhouse query appear.
+  title: Stat4Market API integration with clickhouse
+  version: "1.0"
+paths:
+  /api/event:
+    post:
+      consumes:
+      - application/json
+      description: Save event to the storage
+      operationId: event
+      parameters:
+      - description: Event
+        in: body
+        name: models.EventHandler
+        required: true
+        schema:
+          $ref: '#/definitions/models.EventHandler'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Save event
+      tags:
+      - api
+swagger: "2.0"

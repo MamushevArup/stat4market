@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server
+    container_name: clickhouse-db
+    env_file:
+      - .env
+    volumes:
+      - clickhouse:/var/lib/clickhouse
+    networks:
+      - stat4market
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    restart: always
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:9000/?query=SELECT%201 || exit 1
+  stat4market:
+    container_name: stat4market
+    build:
+      context: .
+      dockerfile: /Dockerfile
+    env_file:
+      - .env
+    networks:
+      - stat4market
+    ports:
+      - "4444:4444"
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+    restart: always
+
+networks:
+  stat4market:
+
+volumes:
+  clickhouse:
