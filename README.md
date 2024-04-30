@@ -1,10 +1,16 @@
 # Installation and Usage
 
 First clone repository on local
-``` cd stat4market```
+```
+cd stat4market
+```
+
 To run application use this command if you have docker installed.
 Review .env to ensure that credentials true.
-``` docker compose up --build```
+
+```plaintext 
+docker compose up --build
+```
 
 ### Requirements 1
 Написать SQL-запросы для ClickHouse:
@@ -18,10 +24,10 @@ You can find the query to the clickhouse in the __event.sql__ file.
 ### Requirements 2
 Вывод событий по заданному eventType и временному диапазону.
 
-Code impelemntation can be foun in __/internal/repository/clickhouse/select-event-type.go__ file as well.
+Code impelemntation can be found in __/internal/repository/clickhouse/select-event-type.go__ file as well.
 
 ### Endpoints
-```plaintext
+```
 POST /api/event insert event to the clickhouse db
 GET /swagger/* to see documentation server
 ```
